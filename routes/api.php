@@ -35,7 +35,7 @@ Route::get('/', function () {
 Route::controller(NoticiaController::class)->prefix('sistema')->as('noticias.')->group(function () {
     Route::get('noticias', 'index');
     Route::get('noticias/{idNoticia}', 'show');
-    Route::post('noticias/{idNoticia}', 'store');
+    Route::post('noticias', 'store');
     Route::put('noticias/{idNoticia}', 'update');
     Route::delete('noticias/{idNoticia}', 'destroy');
 });
