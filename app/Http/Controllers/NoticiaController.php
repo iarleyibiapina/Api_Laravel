@@ -31,10 +31,14 @@ class NoticiaController extends Controller
     public function store(Request $request)
     {
         //
-        if (empty($request->nome_noticia) || empty($request->conteudo_noticia)) return response('Dados vazios', 400);
+        if (empty($request->nome_noticia) || empty($request->conteudo_noticia)) return response()->json([
+            'message' => "Error campo em branco"
+        ], 400);
 
         $verificaNome = NoticiaModel::where('nome_noticia_tbn', $request->nome_noticia)->first();
-        if ($verificaNome) return response("Nome já existente", 400);
+        if ($verificaNome) return response()->json([
+            'message' => "Nome de noticia já existente"
+        ], 400);
 
         $dadosRequest = [
             'nome_noticia_tbn' => $request->nome_noticia,
@@ -69,11 +73,15 @@ class NoticiaController extends Controller
      */
     public function update(Request $request, string $idNoticia)
     {
-        if (empty($request->nome_noticia) || empty($request->conteudo_noticia)) return response('Dados vazios', 400);
+        if (empty($request->nome_noticia) || empty($request->conteudo_noticia)) return response()->json([
+            'message' => "Error campo em branco"
+        ], 400);
 
-        $verificaNome = NoticiaModel::where('nome_noticia_tbn', $request->nome_noticia)->first();
+        $verificaNome = NoticiaModel::where('nome_noticia_tbn', $request->nome_noticia)->where('id_noticias_tbn', '<>', $idNoticia)->first();
 
-        if ($verificaNome) return response("Nome já existente", 400);
+        if ($verificaNome) return response()->json([
+            'message' => "Nome já existente"
+        ], 400);
 
         $dadosRequest = [
             'nome_noticia_tbn' => $request->nome_noticia,
