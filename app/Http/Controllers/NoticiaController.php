@@ -86,4 +86,20 @@ class NoticiaController extends Controller
             "message" => "Dados atualizado com sucesso",
         ]);
     }
+
+    /**
+     * Deletando uma noticia do banco
+     *
+     * @author Iarley Ibiapina
+     * @param string $idNoticia - identificador da noticia
+     */
+    public function destroy(string $idNoticia)
+    {
+        //
+        NoticiaModel::where('id_noticias_tbn', $idNoticia)->delete();
+
+        return response()->json([
+            'message' => 'Dados deletado com sucesso'
+        ]);
+    }
 }
