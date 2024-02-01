@@ -33,6 +33,9 @@ class NoticiaController extends Controller
         //
         if (empty($request->nome_noticia) || empty($request->conteudo_noticia)) return response('Dados vazios', 400);
 
+        $verificaNome = NoticiaModel::where('nome_noticia_tbn', $request->nome_noticia)->first();
+        if ($verificaNome) return response("Nome já existente", 400);
+
         $dadosRequest = [
             'nome_noticia_tbn' => $request->nome_noticia,
             'conteudo_noticia_tbn' => $request->conteudo_noticia
@@ -42,5 +45,19 @@ class NoticiaController extends Controller
         return response()->json([
             'message' => "Dados inserido com sucesso",
         ]);
+    }
+
+
+    /**
+     * Exibe uma noticia
+     *
+     * @author Iarley Ibiapina
+     * @param string $idNoticia - identificador da noticia
+     */
+    public function show(string $idNoticia)
+    {
+        //
+        $dadosNoticia = NoticiaModel::where('id_noticias_tbn', $idNoticia)->get();
+        return response()->json($dadosNoticia);
     }
 }
