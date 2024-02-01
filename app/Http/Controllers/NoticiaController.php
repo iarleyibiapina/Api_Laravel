@@ -22,4 +22,25 @@ class NoticiaController extends Controller
             'noticiasArmazenadas' => $dadosNoticia,
         ]);
     }
+
+    /**
+     * Armazena uma nova noticia
+     *
+     * @author Iarley Ibiapina
+     */
+    public function store(Request $request)
+    {
+        //
+        if (empty($request->nome_noticia) || empty($request->conteudo_noticia)) return response('Dados vazios', 400);
+
+        $dadosRequest = [
+            'nome_noticia_tbn' => $request->nome_noticia,
+            'conteudo_noticia_tbn' => $request->conteudo_noticia
+        ];
+
+        NoticiaModel::firstOrCreate($dadosRequest);
+        return response()->json([
+            'message' => "Dados inserido com sucesso",
+        ]);
+    }
 }
