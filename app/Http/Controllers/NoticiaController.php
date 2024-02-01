@@ -2,68 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NoticiaModel;
 use Illuminate\Http\Request;
+
+// ?param - recebe pelo request - para fazer consultas
 
 class NoticiaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Trazendo todas as noticias do banco.
+     * 
+     * @author Iarley Ibiapina
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return "index";
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-        return "store";
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $idNoticia)
-    {
-        //
-        return "show";
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $idNoticia)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $idNoticia)
-    {
-        //
-        return "update";
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $idNoticia)
-    {
-        //
-        return "delete";
+        $dadosNoticia = NoticiaModel::all();
+        return response()->json([
+            'noticiasArmazenadas' => $dadosNoticia,
+        ]);
     }
 }
