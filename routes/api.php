@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\{UserController, NoticiaController};
 
 /*
 |--------------------------------------------------------------------------
@@ -32,10 +32,18 @@ Route::get('/', function () {
 // group() - reune e separa rotas 
 // prefix() - é como a url será exibida, com o acréscimo de cada rota definida.
 // as() - é o nome de cada rota, será utilizado no controller
-Route::controller(NoticiaController::class)->prefix('sistema')->as('noticias.')->group(function () {
-    Route::get('noticias', 'index');
-    Route::get('noticias/{idNoticia}', 'show');
-    Route::post('noticias', 'store');
-    Route::put('noticias/{idNoticia}', 'update');
-    Route::delete('noticias/{idNoticia}', 'destroy');
+
+// alterar para usar middleware
+Route::controller(NoticiaController::class)->middleware('jwt.auth')->prefix('sistema')->as('noticias')->group(function () {
+    Route::get('noticias', 'index')->name('index')->middleware('jwt.auth');
+    Route::get('noticias/{idNoticia}', 'show')->name('show');
+    Route::post('noticias', 'store')->name('store');
+    Route::put('noticias/{idNoticia}', 'update')->name('update');
+    Route::delete('noticias/{idNoticia}', 'destroy')->name('destroy');
+});
+
+// Rotas para autenticação e criação de usuarios
+Route::controller(UserController::class)->prefix('sistema')->as('usuario')->group(function () {
+    Route::post('registrar', 'registrar')->name('registrar');
+    Route::post('logar', 'logar')->name('logar');
 });
