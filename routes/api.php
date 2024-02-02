@@ -15,14 +15,14 @@ use App\Http\Controllers\{UserController, NoticiaController};
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
 Route::get('/', function () {
-    return "Olá";
-});
+    return "Está rota será chamada se usuario não logado";
+})->name('login');
 
 // Rotas para consumo
 
@@ -34,7 +34,7 @@ Route::get('/', function () {
 // as() - é o nome de cada rota, será utilizado no controller
 
 // alterar para usar middleware
-Route::controller(NoticiaController::class)->middleware('jwt.auth')->prefix('sistema')->as('noticias')->group(function () {
+Route::controller(NoticiaController::class)->middleware('auth:api')->prefix('sistema')->as('noticias')->group(function () {
     Route::get('noticias', 'index')->name('index')->middleware('jwt.auth');
     Route::get('noticias/{idNoticia}', 'show')->name('show');
     Route::post('noticias', 'store')->name('store');
