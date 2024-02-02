@@ -55,4 +55,5 @@ Route::group([
     'prefix' => 'sistema',
 ], function () {
     Route::get('usuarios', [UserController::class, 'index'])->name('index');
+    Route::get('logout', [UserController::class, 'logout'])->name('logout');
 });

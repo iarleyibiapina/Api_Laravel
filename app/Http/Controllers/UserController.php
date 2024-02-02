@@ -66,4 +66,13 @@ class UserController extends Controller
             ]
         ]);
     }
+
+    public function logout()
+    {
+        auth('api')->logout();
+
+        return response()->json([
+            'message' => 'Logout efeutado com sucesso',
+        ]);
+    }
 }
