@@ -162,3 +162,11 @@ neste caso foi criado uma `Factory` nomeada de NoticiasModelFactory dentro de Da
 -   Factory, em laravel é um 'espaço' que tem como função gerar dados em grande quantidade, uma Fábrica de dados que foi utilizada para gerar dados falsos para testes.
 
 E em Database\Seeders, um `NoticiasSeeder`, uma seeder tem como função 'chamar' uma factory executar e enviar para o banco de Dados.
+
+User Seeder
+
+Gera um usuario para testar resgistro, login e chave de JWT token
+
+php artisan db:seed --class=UserSeeder
+
+A senha padrão para usuario criado via seeder é: password
