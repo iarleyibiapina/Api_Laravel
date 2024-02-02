@@ -33,4 +33,29 @@ class UserController extends Controller
             'message' => true
         ]);
     }
+    public function logar(Request $request)
+    {
+        $dadosRequest = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        if (!$usuario = User::where('email', $dadosRequest['email'])->get()->first()) {
+            return response()->json([
+                'message' => 'Usuario não encontrado, email ou senha inválidos'
+            ], 400);
+        }
+
+        if (!$token = auth()->attempt($dadosRequest)) return response()->json(['message' => 'Login não sucedido']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Usuario logado',
+            'data' => [
+                'token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth()->factory()->getTTL() * 60,
+            ]
+        ]);
+    }
 }
