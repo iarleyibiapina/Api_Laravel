@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+
+    public function index()
+    {
+        $users = User::all();
+
+        return response()->json($users);
+    }
+
     /**
      * Registrar um usuario, espera receber:
      * 

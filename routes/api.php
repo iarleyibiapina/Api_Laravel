@@ -47,3 +47,12 @@ Route::controller(UserController::class)->prefix('sistema')->as('usuario')->grou
     Route::post('registrar', 'registrar')->name('registrar');
     Route::post('logar', 'logar')->name('logar');
 });
+
+
+// ajustando com middleware
+Route::group([
+    'middleware' => ['apiJwt'],
+    'prefix' => 'sistema',
+], function () {
+    Route::get('usuarios', [UserController::class, 'index'])->name('index');
+});
